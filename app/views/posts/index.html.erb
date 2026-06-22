@@ -1,0 +1,32 @@
+<% content_for :title, "Posts" %>
+
+<h1>Posts</h1>
+
+<%# Vue.js post filter widget %>
+<div id="post-filter" data-vue-app="postFilter">
+  <input v-model="search" placeholder="Filter posts..." style="margin-bottom: 1rem; padding: 0.4rem;" />
+  <p v-if="search">Filtering by: {{ search }}</p>
+</div>
+
+<div id="posts">
+  <% @posts.each do |post| %>
+    <%= render post %>
+    <p>
+      <%= link_to "Show this post", post %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New post", new_post_path %>
+
+<script type="module">
+  import { createApp, ref } from "vue"
+
+  createApp({
+    setup() {
+      const search = ref("")
+      return { search }
+    }
+  }).mount("#post-filter")
+</script>
+
